@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <script src="script.js"></script>
+</head>
+
+<body onload="init()">
+  <input id="fileInput" type="file" name="file" />
+  <pre id="fileContent1"></pre>
+  <pre id="fileContent2"></pre>
+  <pre id="fileContent3"></pre>
+  <pre id="fileContent4"></pre>
+  <pre id="fileContent5"></pre>
+
+
+
+  <script>
+function init() {
+  document.getElementById('fileInput').addEventListener('change', handleFileSelect, false);
+}
+
+function handleFileSelect(event) {
+  const reader = new FileReader()
+  reader.onload = handleFileLoad;
+  reader.readAsText(event.target.files[0])
+}
+
+function handleFileLoad(event) {
+  console.log(event);
+  <!-- document.getElementById('fileContent').textContent = event.target.result; -->
+// Sort the array
+
+var arr = event.target.result;
+arr = arr.split('\r');
+const counts = {};
+  let maxCount = 0;
+  let maxKey;
+  // Count how many times each object (or really its string representation)
+  // appears, and keep track of the highest count we've seen.
+  for (let i = 0; i < arr.length; i++) {
+    const key = arr[i];
+    const count = (counts[key] = (counts[key] || 0) + 1);
+    if (count > maxCount) {
+      maxCount = count;
+      maxKey = key;
+    }
+  }
+  
+var sortable = [];
+for (var xx in counts) {
+    sortable.push([xx, counts[xx]]);
+}
+
+sortable.sort(function(a, b) {
+    return a[1] - b[1];
+});
+
+ 
+
+document.getElementById('fileContent1').textContent = sortable[sortable.length - 1][0];
+document.getElementById('fileContent2').textContent = sortable[sortable.length - 2][0];
+document.getElementById('fileContent3').textContent = sortable[sortable.length - 3][0];
+document.getElementById('fileContent4').textContent = sortable[sortable.length - 4][0];
+document.getElementById('fileContent5').textContent = sortable[sortable.length - 5][0];
+
+}
+  </script>
+</body>
+</html>
